@@ -19,10 +19,12 @@ IMPORTANT
 - The quote form is frontend/demo only. It requires agreement to the Website Terms and acknowledgement of the Privacy Policy and POPIA Data Subject Notice, but sends and stores neither enquiries nor acknowledgements.
 - The footer links to legal.html, which publishes the supplied Website Terms, Privacy Policy, POPIA Data Subject Notice, PAIA Manual and Cookie Policy. The shorter publication-copy document duplicates the full Terms and Privacy Policy and is not published as a separate, conflicting version.
 - Effective dates, Information Officer details and company physical/postal addresses were blank in the supplied documents; these have not been invented or published as confirmed details.
-- Calendar booking and future LMS/payment integration remain deployment/phase-2 connections.
+- The online training platform is planned for a future launch; training arrangements are currently made directly.
+- The supplied SAIOSH corporate membership certificate is published in its original, unchanged PDF format.
 
-Primary contact currently used from client brief:
-Nolan: 083 646 7294
+Regional contacts and scope:
+Nolan: 083 646 7294 — training, consulting, ISO support, OHS compliance audits and wider SHEQ services in the Eastern Cape.
+Mick: 060 949 9911 — training courses only in Limpopo and Mpumalanga.
 WhatsApp: 067 577 9148
 Email: ubunyesafety@gmail.com
 
