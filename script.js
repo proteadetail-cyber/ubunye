@@ -21,9 +21,15 @@
       });
     }
     if(typeof settings.phone==='string'&&settings.phone.trim()){
-      document.querySelectorAll('a[href^="tel:"]').forEach(function(link){
+      document.querySelectorAll('a[data-contact="nolan"]').forEach(function(link){
         link.href='tel:'+toTelephoneHref(settings.phone);
         replaceContactNumber(link,settings.phone);
+      });
+    }
+    if(typeof settings.mickPhone==='string'&&settings.mickPhone.trim()){
+      document.querySelectorAll('a[data-contact="mick"]').forEach(function(link){
+        link.href='tel:'+toTelephoneHref(settings.mickPhone);
+        replaceContactNumber(link,settings.mickPhone);
       });
     }
     if(typeof settings.whatsapp==='string'&&settings.whatsapp.trim()){
@@ -49,7 +55,7 @@
   var serviceUrls={
     'sheq consulting':'/services/sheq-consulting','ohs compliance':'/services/ohs-compliance','iso consulting':'/services/iso-consulting',
     'risk assessments':'/services/risk-assessments','safety files':'/services/safety-files','safety training':'/services/safety-training',
-    'incident investigation':'/services/incident-investigation'
+    'incident investigation':'/services/incident-investigation','sheq retainer support':'/retainers'
   };
   function renderManagedServices(services){
     var grid=document.querySelector('.core-service-grid');
@@ -91,7 +97,6 @@
       if(section) section.remove();
       return;
     }
-    if(!section) return;
     if(!section){
       section=document.createElement('section');
       section.className='section-surface cms-faq';
@@ -103,7 +108,7 @@
       var list=document.createElement('div');
       list.className='faq';
       section.append(head,list);
-      main.insertBefore(section,main.querySelector('.cta'));
+      main.insertBefore(section,main.querySelector('.cta')||null);
     }
     var faqList=section.querySelector('.faq');
     faqList.replaceChildren();
@@ -117,6 +122,27 @@
       details.append(summary,answer);
       faqList.append(details);
     });
+  }
+  function renderManagedCourses(courses){
+    var grid=document.querySelector('[data-managed-courses]');
+    if(!grid) return;
+    var cards=Array.from(grid.querySelectorAll(':scope > article'));
+    var colours=['pink','mint','blue','gold','lilac','dark'];
+    courses.forEach(function(course,index){
+      var card=cards[index];
+      if(!card){
+        card=document.createElement('article');
+        card.className='card '+colours[index%colours.length]+' span2 reveal in';
+        var title=document.createElement('h3');
+        card.append(title);
+        grid.append(card);
+        cards.push(card);
+      }
+      card.hidden=false;
+      setText(card.querySelector('h3'),course.t);
+    });
+    cards.slice(courses.length).forEach(function(card){card.hidden=true});
+    grid.style.display=courses.length?'':'none';
   }
   function renderManagedProof(proof){
     var container=document.querySelector('main .case');
@@ -133,20 +159,24 @@
       card.append(title,details);
       container.append(card);
     });
-    container.hidden=proof.length===0;
+    container.style.display=proof.length?'':'none';
   }
   function renderAdminContent(data){
     var content=data.content||{};
     var settings=data.settings||{};
     if(document.querySelector('.hero-copy')){
       setText(document.querySelector('.hero-copy .kicker'),content.heroKicker);
+      setText(document.querySelector('.hero-copy .hero-brand'),content.heroTitle);
       setText(document.querySelector('.hero-copy p'),content.heroText);
       var primaryCta=document.querySelector('.nav-start-text');
       setText(primaryCta,content.ctaPrimary);
       if(primaryCta&&content.ctaPrimary) primaryCta.closest('a').setAttribute('aria-label',content.ctaPrimary+' from UBUNYE');
+      setText(document.querySelector('.hero-copy .quote-glass'),content.ctaPrimary);
+      setText(document.querySelector('.hero-copy .whatsapp-glass'),content.ctaSecondary);
     }
     renderContactSettings(settings);
     if(Array.isArray(data.services)) renderManagedServices(data.services);
+    if(Array.isArray(data.courses)) renderManagedCourses(data.courses);
     if(Array.isArray(content.faq)&&document.querySelector('.hero-copy')) renderManagedFaq(content.faq);
     if(Array.isArray(data.proof)) renderManagedProof(data.proof);
   }

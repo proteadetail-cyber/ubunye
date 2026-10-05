@@ -227,29 +227,34 @@ aside{background:linear-gradient(180deg,#171719 0%,#050506 100%)}
 const KEY="ubunye-admin-v1";
 const DEF={
  content:{heroKicker:"Safety • Compliance • Confidence",heroTitle:"UBUNYE",
-  heroText:"Professional SHEQ, OHS compliance, ISO support and safety training for industrial and corporate businesses across Eastern Cape, Limpopo and Mpumalanga.",
-  ctaPrimary:"get quote",ctaSecondary:"Explore services",
+  heroText:"UBUNYE Safety & Compliance provides safety training in Eastern Cape, Limpopo and Mpumalanga, and consulting, ISO and OHS compliance services in the Eastern Cape.",
+  ctaPrimary:"Get quote",ctaSecondary:"Explore services",
   faq:[
-   {q:"Can Ubunye support a once-off compliance project?",a:"Yes. The site supports both once-off project enquiries and ongoing SHEQ retainer requests. Final scope is confirmed directly with Ubunye."},
-   {q:"Can we request ISO-related support?",a:"Yes. ISO consulting support forms part of the brief. The standard, deliverables and certification scope are confirmed before work begins."},
-   {q:"Do you provide safety training?",a:"Safety training is included. Course titles and accreditation claims are listed once verified details are supplied."},
-   {q:"Can we book a consultation first?",a:"Yes. The site includes consultation and quote pathways."}]},
+   {q:"Which services are available in the Eastern Cape?",a:"Nolan provides training, consulting, ISO support, OHS compliance audits and wider SHEQ services in the Eastern Cape."},
+   {q:"Who provides training in Limpopo and Mpumalanga?",a:"Mick provides training courses only in Limpopo and Mpumalanga. Call 060 949 9911 to discuss arrangements."},
+   {q:"Which training courses are available?",a:"First Aid Level 1, Fire Fighting, OHS SHE Representative, Legal Liability, Working at Heights and Incident Investigations. Contact UBUNYE to arrange training; the online platform is not live yet."},
+   {q:"Who awards ISO certification?",a:"Certification is awarded by an independent certification body. Nolan provides ISO 9001, ISO 14001 and ISO 45001 support in the Eastern Cape."}]},
  services:[
-  {t:"OHS & legal compliance",d:"Compliance reviews, gap identification, documentation support and practical action planning.",v:true},
-  {t:"ISO consulting support",d:"Structured support for organisations working toward management-system alignment and certification readiness.",v:true},
-  {t:"Safety training",d:"Training support designed around your operational needs and workforce.",v:true},
-  {t:"SHEQ retainers",d:"Ongoing support for companies that need consistent compliance assistance without a full-time internal resource.",v:true},
-  {t:"Compliance updates",d:"Blog-ready updates for ISO deadlines and compliance changes.",v:true}],
+  {t:"SHEQ consulting",d:"Safety, health, environment and quality guidance that connects your policies, people and day-to-day operations.",v:true},
+  {t:"OHS compliance",d:"Compliance reviews, OHS audits, gap identification, documentation support and practical action planning.",v:true},
+  {t:"ISO consulting",d:"Support for ISO 9001, ISO 14001 and ISO 45001: gap analysis, documentation, implementation and readiness.",v:true},
+  {t:"Risk assessments",d:"Hazard identification, risk rating and practical controls, recorded in a clear written assessment.",v:true},
+  {t:"Safety files",d:"Preparation and review of organised health and safety files that show how your business manages safety.",v:true},
+  {t:"Safety training",d:"Training support designed around your workforce, your risks and your operational needs.",v:true},
+  {t:"Incident investigation",d:"Independent support to establish what happened, why it happened and what needs to change.",v:true}],
+ courses:[
+  {t:"First Aid Level 1",v:true},{t:"Fire Fighting",v:true},{t:"OHS SHE Representative",v:true},
+  {t:"Legal Liability",v:true},{t:"Working at Heights",v:true},{t:"Incident Investigations",v:true}],
  proof:[
   {t:"Client testimonial",d:"Verified client feedback will be inserted here once supplied and approved.",ok:false,pub:false},
-  {t:"Case study framework",d:"Problem → intervention → measurable result.",ok:true,pub:true}],
- settings:{email:"ubunyesafety@gmail.com",phone:"083 646 7294",whatsapp:"067 577 9148",provinces:"Eastern Cape, Limpopo, Mpumalanga",title:"Ubunye Safety & Compliance | SHEQ, OHS & ISO Support",analytics:"",maint:false}
+  {t:"Case study framework",d:"Placeholder only; no client case study is published.",ok:false,pub:false}],
+ settings:{email:"ubunyesafety@gmail.com",phone:"083 646 7294",mickPhone:"060 949 9911",whatsapp:"067 577 9148",provinces:"Eastern Cape, Limpopo, Mpumalanga",title:"UBUNYE Safety & Compliance | SHEQ, OHS & ISO Consulting South Africa",analytics:"",maint:false}
 };
 let S=JSON.parse(JSON.stringify(DEF)),PW=sessionStorage.getItem("ua-pw")||"",ROLE=sessionStorage.getItem("ua-role")||"";
-async function api(m,b){const r=await fetch("/admin/api/data",{method:m,headers:{"content-type":"application/json",authorization:"Bearer "+PW,"x-role":ROLE},body:b?JSON.stringify(b):undefined});if(r.status===401)throw 401;if(!r.ok)throw r.status;return r.json()}
-let _t;const save=m=>{clearTimeout(_t);_t=setTimeout(()=>api("PUT",S).then(()=>toast(m||"Saved")).catch(()=>toast("Save failed - try again")),250)};
-async function boot(){if(!ROLE||!PW)return login("");try{S=await api("GET");$("who").textContent="Signed in: "+ROLES[ROLE][0];render()}catch(e){login(e===401?"Wrong password.":"Could not reach the server.")}}
-const ROLES={dev:["Wey Developer","Full access, including SEO, analytics and maintenance mode."],director:["USC Director","Manage services, FAQ, proof and contact details."]};
+async function api(m,b){const r=await fetch("/admin/api/data",{method:m,headers:{"content-type":"application/json",authorization:"Bearer "+PW,"x-role":ROLE},body:b?JSON.stringify(b):undefined});const data=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(data.error||"The admin request failed."),{status:r.status});return data}
+let _t;const save=m=>{clearTimeout(_t);_t=setTimeout(()=>api("PUT",S).then(()=>toast(m||"Saved")).catch(e=>toast(e.message||"Save failed - try again")),250)};
+async function boot(){if(!ROLE||!PW)return login("");try{S=await api("GET");$("who").textContent="Signed in: "+ROLES[ROLE][0];render()}catch(e){login(e.status===401?"Wrong password.":e.message||"Could not reach the server.")}}
+const ROLES={dev:["Wey Developer","Full access, including SEO, analytics and maintenance mode."],director:["USC Director","Manage homepage content, services, courses, proof and contact details."]};
 function login(msg){let r=ROLE||"director";nav();$("who").textContent="";
  const draw=()=>{$("main").innerHTML=`<div class="login"><div class="eyebrow">Ubunye CMS</div><h1>Sign in</h1><div class="mute">Choose how you are signing in.</div>
  <div class="roles">${Object.entries(ROLES).map(([k,[n,d]])=>`<button class="role ${k===r?"on":""}" data-r="${k}"><b>${n}</b><span>${d}</span></button>`).join("")}</div>
@@ -259,11 +264,11 @@ function login(msg){let r=ROLE||"director";nav();$("who").textContent="";
  $("go").onclick=go;$("pw").onkeydown=e=>{if(e.key==="Enter")go()};$("pw").focus()};draw()}
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("on"),1600)}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const TABS=[["overview","Overview"],["content","Page content"],["services","Services"],["proof","Case studies & proof"],["settings","Site settings"]];
+const TABS=[["overview","Overview"],["content","Page content"],["services","Services"],["courses","Training courses"],["proof","Case studies & proof"],["settings","Site settings"]];
 let tab="overview";
 const $=id=>document.getElementById(id);
 const TK=["COIDA","OHS ACT","ISO 45001","SHEQ retainers","Safety training","Risk management"].map(x=>`<span>${x}</span>`).join("");
-const IC={overview:'<path d="M3 12l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>',content:'<path d="M5 3h10l4 4v14H5zM14 3v5h5M8 13h8M8 17h6"/>',services:'<path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5M3 17l9 5 9-5" />',proof:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>'};
+const IC={overview:'<path d="M3 12l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>',content:'<path d="M5 3h10l4 4v14H5zM14 3v5h5M8 13h8M8 17h6"/>',services:'<path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5M3 17l9 5 9-5" />',courses:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',proof:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>'};
 function nav(){$("nav").innerHTML=TABS.map(([k,n])=>`<button class="nav ${k===tab?"on":""}" data-t="${k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[k]}</svg>${n}</button>`).join("");
  $("nav").querySelectorAll("button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;render()})}
 function head(e,t,sub){return `<div class="top"><div><div class="eyebrow">${e}</div><h1>${t}</h1>${sub?`<div class="mute">${sub}</div>`:""}</div></div>`}
@@ -275,17 +280,20 @@ overview(){const live=S.services.filter(s=>s.v).length,pend=S.proof.filter(p=>!p
  `<div class="ticker"><div class="tr">${TK}${TK}</div></div>`+
  (S.settings.maint?`<div class="note"><b>Maintenance mode is ON.</b> Visitors would see a holding page.</div>`:"")+
  `<div class="grid">
- <div class="card stat pink"><span class="lbl">PAGES</span><b>8</b><span class="mute">Core pages with editable content.</span></div>
+ <div class="card stat pink"><span class="lbl">PUBLIC PAGES</span><b>17</b><span class="mute">Service, company and legal pages.</span></div>
  <div class="card stat mint"><span class="lbl">LIVE SERVICES</span><b>${live}/${S.services.length}</b><span class="mute">Visible on the website.</span></div>
+ <div class="card stat blue"><span class="lbl">LIVE COURSES</span><b>${S.courses.filter(c=>c.v).length}/${S.courses.length}</b><span class="mute">Visible on the training page.</span></div>
  <div class="card stat blue"><span class="lbl">PROOF AWAITING</span><b>${pend}</b><span class="mute">Items not yet verified.</span></div>
- <div class="card stat gold"><span class="lbl">LEAD ROUTES</span><b>3</b><span class="mute">Quote form, WhatsApp, direct.</span></div></div>
+ <div class="card stat gold"><span class="lbl">CONTACT ROUTES</span><b>4</b><span class="mute">Nolan, Mick, WhatsApp and email.</span></div></div>
  <div class="card"><h3>Lead routes</h3>
- <div class="row"><div class="g"><b>Quote form</b><div class="mute">quote.html</div></div><span class="tag ok">ACTIVE</span></div>
+ <div class="row"><div class="g"><b>Quote form</b><div class="mute">Frontend demo only; enquiries are not sent or stored.</div></div><span class="tag wait">DEMO</span></div>
  <div class="row"><div class="g"><b>WhatsApp</b><div class="mute">${esc(S.settings.whatsapp)}</div></div><span class="tag ok">ACTIVE</span></div>
- <div class="row"><div class="g"><b>Direct contact</b><div class="mute">${esc(S.settings.email)} · ${esc(S.settings.phone)} (Nolan)</div></div><span class="tag ok">ACTIVE</span></div></div>`},
+ <div class="row"><div class="g"><b>Nolan · Eastern Cape</b><div class="mute">${esc(S.settings.phone)} · training, consulting, ISO and OHS compliance</div></div><span class="tag ok">ACTIVE</span></div>
+ <div class="row"><div class="g"><b>Mick · Limpopo &amp; Mpumalanga</b><div class="mute">${esc(S.settings.mickPhone)} · training courses only</div></div><span class="tag ok">ACTIVE</span></div>
+ <div class="row"><div class="g"><b>Email</b><div class="mute">${esc(S.settings.email)}</div></div><span class="tag ok">ACTIVE</span></div></div>`},
 
 content(){const c=S.content;
- return head("Page content","Homepage","Hero text and FAQ.")+
+ return head("Page content","Homepage","Manage the homepage introduction and its FAQ.")+
  `<div class="card" style="margin-bottom:18px"><h3>Hero</h3><br>
  ${[["heroKicker","Kicker"],["heroTitle","Heading"],["ctaPrimary","Primary button"],["ctaSecondary","Secondary button"]].map(([k,l])=>`<label class="f">${l}<input type="text" data-c="${k}" value="${esc(c[k])}"></label>`).join("")}
  <label class="f">Intro text<textarea data-c="heroText">${esc(c.heroText)}</textarea></label>
@@ -293,14 +301,25 @@ content(){const c=S.content;
  <div class="card"><div class="row" style="border:0;padding-top:0"><h3 class="g">FAQ</h3><button class="btn s" id="addQ">+ Add question</button></div>
  ${c.faq.map((f,i)=>`<div class="row"><div class="g"><b>${esc(f.q)}</b><div class="mute">${esc(f.a)}</div></div><button class="btn s" data-eq="${i}">Edit</button><button class="btn s d" data-dq="${i}">Delete</button></div>`).join("")}</div>`},
 
-services(){return head("Service management","Services","Toggle visibility, reorder and edit.")+
+services(){return head("Service management","Homepage services","Toggle visibility, reorder and edit the service cards shown on the homepage.")+
  `<div class="card"><div class="row" style="border:0;padding-top:0"><span class="g mute">${S.services.length} services</span><button class="btn p s" id="addS">+ Add service</button></div>
  ${S.services.map((s,i)=>`<div class="row"><label class="sw"><input type="checkbox" data-vs="${i}" ${s.v?"checked":""}><i></i></label>
  <div class="g"><b>${esc(s.t)}</b><div class="mute">${esc(s.d)}</div></div>
  <button class="btn s" data-up="${i}" ${i?"":"disabled"}>↑</button><button class="btn s" data-dn="${i}" ${i<S.services.length-1?"":"disabled"}>↓</button>
  <button class="btn s" data-es="${i}">Edit</button><button class="btn s d" data-ds="${i}">Delete</button></div>`).join("")}</div>`},
 
+courses(){return head("Training management","Training courses","Manage the course cards shown on the safety training page. SAIOSH evidence files are read-only.")+
+ `<div class="card"><div class="row" style="border:0;padding-top:0"><span class="g mute">${S.courses.length} courses</span><button class="btn p s" id="addCourse">+ Add course</button></div>
+ ${S.courses.map((course,i)=>`<div class="row"><label class="sw"><input type="checkbox" data-vcourse="${i}" ${course.v?"checked":""}><i></i></label>
+ <div class="g"><b>${esc(course.t)}</b><div class="mute">${course.v?"Shown on the public training page.":"Hidden from the public training page."}</div></div>
+ <button class="btn s" data-upcourse="${i}" ${i?"":"disabled"}>↑</button><button class="btn s" data-downcourse="${i}" ${i<S.courses.length-1?"":"disabled"}>↓</button>
+ <button class="btn s" data-editcourse="${i}">Edit</button><button class="btn s d" data-deletecourse="${i}">Delete</button></div>`).join("")}</div>
+ <div class="card" style="margin-top:18px"><h3>Regional delivery</h3><p class="mute">Nolan provides training and wider SHEQ services in the Eastern Cape. Mick provides training courses only in Limpopo and Mpumalanga. Update their contact numbers in Site settings.</p><a class="btn s" href="https://ubunye.weybrand.co.za/services/safety-training" target="_blank" rel="noopener">View training page ↗</a></div>`},
+
 proof(){return head("Verified proof only","Testimonials & case studies","Content can only be published once the client has verified it.")+
+ `<div class="card" style="margin-bottom:18px"><h3>SAIOSH membership evidence</h3><p class="mute">Official SAIOSH files are published as supplied. They are not editable or replaceable from this panel.</p>
+ <div class="row"><div class="g"><b>Corporate member badge</b></div><a class="btn s" href="https://ubunye.weybrand.co.za/saiosh-corporate-member-badge.jpg" target="_blank" rel="noopener">View file ↗</a></div>
+ <div class="row"><div class="g"><b>Corporate membership certificate</b></div><a class="btn s" href="https://ubunye.weybrand.co.za/saiosh-corporate-membership-certificate.jpg" target="_blank" rel="noopener">View image ↗</a><a class="btn s" href="https://ubunye.weybrand.co.za/saiosh-corporate-membership-certificate.pdf" target="_blank" rel="noopener">View PDF ↗</a></div></div>`+
  `<div class="card"><div class="row" style="border:0;padding-top:0"><span class="g mute">${S.proof.length} items</span><button class="btn p s" id="addP">+ Add item</button></div>
  ${S.proof.map((p,i)=>`<div class="row"><div class="g"><b>${esc(p.t)}</b><div class="mute">${esc(p.d)}</div></div>
  <span class="tag ${p.ok?"ok":"wait"}">${p.ok?"VERIFIED":"AWAITING"}</span>
@@ -309,8 +328,8 @@ proof(){return head("Verified proof only","Testimonials & case studies","Content
  <button class="btn s" data-ep="${i}">Edit</button><button class="btn s d" data-dp="${i}">Delete</button></div>`).join("")}</div>`},
 
 settings(){const s=S.settings;
- return head("Site settings","Global fields","Contact details, SEO and site status.")+
- `<div class="card">${[["email","Email"],["phone","Phone (Nolan)"],["whatsapp","WhatsApp"],["provinces","Provinces served"],["title","SEO title"],["analytics","Analytics ID"]].filter(([k])=>ROLE==="dev"||!["title","analytics"].includes(k)).map(([k,l])=>`<label class="f">${l}<input type="text" data-s="${k}" value="${esc(s[k])}"></label>`).join("")}
+ return head("Site settings","Contact details","Contact channels and regional course coverage.")+
+ `<div class="card">${[["email","Email"],["phone","Nolan · Eastern Cape"],["mickPhone","Mick · Limpopo & Mpumalanga (training only)"],["whatsapp","WhatsApp"],["provinces","Regions (overview)"],["title","SEO title"],["analytics","Analytics ID"]].filter(([k])=>ROLE==="dev"||!["title","analytics"].includes(k)).map(([k,l])=>`<label class="f">${l}<input type="text" data-s="${k}" value="${esc(s[k])}"></label>`).join("")}
  ${ROLE==="dev"?`<div class="row"><div class="g"><b>Maintenance mode</b><div class="mute">Show a holding page to visitors.</div></div><label class="sw"><input type="checkbox" id="maint" ${s.maint?"checked":""}><i></i></label></div>`:""}
  <br><button class="btn p" id="saveS">Save settings</button></div>`}
 };
@@ -342,6 +361,15 @@ function bind(){
   q("[data-ds]",b=>b.onclick=()=>{L.splice(+b.dataset.ds,1);save("Deleted");render()});
   q("[data-up]",b=>b.onclick=()=>{const i=+b.dataset.up;[L[i-1],L[i]]=[L[i],L[i-1]];save();render()});
   q("[data-dn]",b=>b.onclick=()=>{const i=+b.dataset.dn;[L[i+1],L[i]]=[L[i],L[i+1]];save();render()});
+ }
+ if(tab==="courses"){
+  const L=S.courses,F=[["t","Course title"]];
+  $("addCourse").onclick=()=>dlg("New training course",F,{},o=>{L.push({...o,v:true});save();render()});
+  q("[data-vcourse]",e=>e.onchange=()=>{L[+e.dataset.vcourse].v=e.checked;save()});
+  q("[data-editcourse]",b=>b.onclick=()=>{const i=+b.dataset.editcourse;dlg("Edit training course",F,L[i],o=>{Object.assign(L[i],o);save();render()})});
+  q("[data-deletecourse]",b=>b.onclick=()=>{L.splice(+b.dataset.deletecourse,1);save("Deleted");render()});
+  q("[data-upcourse]",b=>b.onclick=()=>{const i=+b.dataset.upcourse;[L[i-1],L[i]]=[L[i],L[i-1]];save();render()});
+  q("[data-downcourse]",b=>b.onclick=()=>{const i=+b.dataset.downcourse;[L[i+1],L[i]]=[L[i],L[i+1]];save();render()});
  }
  if(tab==="proof"){
   const L=S.proof,F=[["t","Title"],["d","Details",1]];

@@ -1,0 +1,8 @@
+name = "ubunye"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-04"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "ubunye-admin"
+database_id = "a3b7774c-b129-4755-a404-81ccd8dfb619"
