@@ -1,1 +1,364 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin Preview | Ubunye Safety & Compliance</title><meta name="robots" content="noindex,nofollow"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css?v=2"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png"></head><body><div class="progress"></div><nav class="nav"><a class="brand" href="index.html">USC</a><div class="navlinks"><a href="services.html">Services</a><a href="compliance.html">Compliance</a><a href="retainers.html">Retainers</a><a href="case-studies.html">Case Studies</a><a href="contact.html">Contact</a></div><a class="btn orange" href="quote.html">Get a quote</a></nav><main><section class="hero small"><div class="kicker">W5A Admin Preview</div><h1>Control centre.</h1><p>This page demonstrates the editable structure planned for deployment. It is a visual admin prototype, not yet connected to authentication or a persistent database.</p></section><section><div class="admin-shell"><aside class="admin-menu"><strong>UBUNYE CMS</strong><a href="#overview">Overview</a><a href="#content">Page content</a><a href="#services-admin">Services</a><a href="#proof">Case studies & proof</a><a href="#settings">Site settings</a><a href="index.html">← View website</a></aside><div class="admin-dashboard"><div class="admin-cards" id="overview"><div class="admin-card pink"><span class="micro">PAGES</span><b>8</b><p>Core pages ready for editable content fields.</p></div><div class="admin-card mint"><span class="micro">LEAD ROUTES</span><b>3</b><p>Quote form, WhatsApp and direct contact.</p></div><div class="admin-card gold"><span class="micro">STATUS</span><b>V3</b><p>Static draft ready for backend connection.</p></div></div><div class="panel" id="content"><div class="kicker">Editable content map</div><h3>Homepage</h3><div class="edit-list"><div class="edit-row"><div><strong>Hero heading & intro</strong><br><span>Primary headline, description and CTAs</span></div><button type="button">Edit</button></div><div class="edit-row"><div><strong>Service cards</strong><br><span>Titles, descriptions, ordering and links</span></div><button type="button">Edit</button></div><div class="edit-row"><div><strong>Sector cards</strong><br><span>Industry labels and positioning copy</span></div><button type="button">Edit</button></div><div class="edit-row"><div><strong>FAQ</strong><br><span>Questions and answers</span></div><button type="button">Edit</button></div></div></div><div class="panel" id="services-admin"><div class="kicker">Service management</div><h3>Future backend controls</h3><p>Service title, category, description, feature image, CTA, visibility and sort order can be moved into database-backed fields.</p><span class="placeholder">BACKEND CONNECTION — DEPLOYMENT PHASE</span></div><div class="panel" id="proof"><div class="kicker">Verified proof only</div><h3>Testimonials, logos & case studies</h3><p>The admin layer should require explicit client approval/verification before proof content can be published. This avoids accidental use of placeholder or unverified claims.</p></div><div class="panel" id="settings"><div class="kicker">Site settings</div><h3>Editable global fields</h3><p>Phone numbers, email, WhatsApp, provinces served, social links, SEO metadata, analytics IDs, maintenance mode and future LMS/payment integration settings.</p></div></div></div></section></main><footer><div><div class="footer-brand">USC</div><p>Ubunye Safety & Compliance — admin prototype.</p></div><div><strong>W5A build</strong><a href="index.html">Back to website</a></div><div><strong>Status</strong><p>Frontend ready</p><p>Backend pending deployment</p></div><div class="copy">Admin preview — not for public indexing.</div></footer><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin | Ubunye Safety & Compliance</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#F1F5F9;--panel:#fff;--panel2:#F8FAFC;--line:#E2E8F0;--text:#0F172A;--mute:#64748B;--acc:#E11D2E;--acc-t:#0F172A;--side:#0F172A;--side-t:#CBD5E1;--ok:#16A34A;--bad:#DC2626}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1220;--panel:#111B2E;--panel2:#0F172A;--line:#1E293B;--text:#F1F5F9;--mute:#94A3B8;--side:#080D18}}
+:root[data-theme="dark"]{--bg:#0B1220;--panel:#111B2E;--panel2:#0F172A;--line:#1E293B;--text:#F1F5F9;--mute:#94A3B8;--side:#080D18}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.app{display:flex;min-height:100vh}
+aside{width:240px;background:var(--side);color:var(--side-t);padding:20px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;letter-spacing:.12em;margin:0 8px 18px}
+.logo{width:34px;height:34px;border-radius:9px;background:var(--acc);color:var(--acc-t);display:grid;place-items:center;font-size:13px;letter-spacing:0}
+.brand small{display:block;font-weight:500;letter-spacing:.08em;color:#94A3B8;font-size:10px}
+aside button.nav{all:unset;cursor:pointer;padding:10px 12px;border-radius:10px;display:flex;justify-content:space-between;font-weight:500}
+aside button.nav:hover{background:rgba(255,255,255,.07)}
+aside button.nav.on{background:var(--acc);color:var(--acc-t);font-weight:700}
+.sp{flex:1}
+aside a{color:var(--side-t);text-decoration:none;padding:10px 12px;font-size:14px}
+main{flex:1;padding:28px;max-width:1000px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.eyebrow{color:var(--acc);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+h1{margin:2px 0 0;font-size:30px;letter-spacing:-.01em}
+h3{margin:0 0 4px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.stat b{display:block;font-size:34px;line-height:1.1;margin:6px 0}
+.mute{color:var(--mute);font-size:14px}.lbl{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--mute)}
+.row{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}.row .g{flex:1;min-width:0}
+.btn{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:8px 14px;border-radius:999px;font:inherit;font-size:14px;font-weight:600}
+.btn:hover{border-color:var(--acc)}
+.btn.p{background:var(--acc);color:var(--acc-t);border-color:var(--acc)}
+.btn.s{padding:5px 11px;font-size:13px}.btn.d{color:var(--bad)}
+.tag{font-size:11px;font-weight:700;letter-spacing:.08em;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--mute);white-space:nowrap}
+.tag.ok{color:var(--ok);border-color:var(--ok)}.tag.wait{color:var(--acc);border-color:var(--acc)}
+.sw{position:relative;width:42px;height:24px;flex:none}
+.sw input{opacity:0;position:absolute;inset:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
+.sw i{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:.2s}
+.sw i:after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.sw input:checked+i{background:var(--acc)}.sw input:checked+i:after{left:21px}
+label.f{display:block;margin-bottom:14px;font-size:13px;font-weight:600;color:var(--mute)}
+input[type=text],textarea,select{width:100%;margin-top:5px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font:inherit}
+input:focus,textarea:focus{outline:2px solid var(--acc);outline-offset:-1px}
+textarea{min-height:80px;resize:vertical}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,80px);background:var(--side);color:#fff;padding:10px 18px;border-radius:99px;border:1px solid var(--acc);transition:.25s;z-index:9}
+.toast.on{transform:translate(-50%,0)}
+.note{border-left:3px solid var(--acc);padding:10px 14px;background:var(--panel2);border-radius:0 10px 10px 0;margin-bottom:18px;font-size:14px}
+.menu{display:none}
+@media(max-width:760px){
+.app{flex-direction:column}
+aside{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;padding:12px}
+.brand{width:100%;margin-bottom:6px}.sp,aside a{display:none}
+aside button.nav{padding:8px 12px;font-size:14px}
+main{padding:18px 14px}h1{font-size:25px}}
+
+/* ---- polish ---- */
+:root{--r:16px;--sh:0 1px 2px rgba(15,23,42,.05),0 8px 24px -12px rgba(15,23,42,.18);--glow:rgba(225,29,46,.35)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--sh:0 1px 2px rgba(0,0,0,.4),0 12px 30px -14px rgba(0,0,0,.7)}}
+:root[data-theme="dark"]{--sh:0 1px 2px rgba(0,0,0,.4),0 12px 30px -14px rgba(0,0,0,.7)}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;
+ background:radial-gradient(900px 400px at 85% -10%,rgba(225,29,46,.08),transparent 60%),var(--bg)}
+h1,h3,.brand,.stat b{font-family:Sora,Inter,system-ui,sans-serif}
+h1{font-weight:800;font-size:32px}
+aside{background:linear-gradient(180deg,#111C33 0%,#0A1120 100%);border-right:1px solid rgba(255,255,255,.06);padding:22px 14px}
+aside:before{content:"";position:absolute;left:0;top:0;right:0;height:160px;background:radial-gradient(120px 90px at 30px 20px,var(--glow),transparent 70%);pointer-events:none}
+aside{overflow:hidden}
+.brand{position:relative;margin-bottom:26px}
+.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#FF4D5A,#E11D2E 60%,#B3121F);box-shadow:0 6px 18px -4px var(--glow);font-family:Sora,sans-serif;font-weight:800}
+#nav{display:flex;flex-direction:column;gap:3px;position:relative}
+aside button.nav{align-items:center;justify-content:flex-start;gap:12px;padding:11px 12px;font-size:14.5px;transition:background .15s,transform .15s;position:relative}
+aside button.nav svg{width:18px;height:18px;flex:none;opacity:.8}
+aside button.nav:hover{background:rgba(255,255,255,.06);color:#fff}
+aside button.nav.on{background:linear-gradient(135deg,#FF4D5A,#E11D2E);box-shadow:0 8px 20px -8px var(--glow)}
+aside button.nav.on svg{opacity:1}
+aside a{border-top:1px solid rgba(255,255,255,.07);padding-top:14px;margin-top:4px;transition:color .15s}
+aside a:hover{color:var(--acc)}
+#theme{background:rgba(255,255,255,.06);color:#E2E8F0;border-color:rgba(255,255,255,.1)}
+main{padding:34px 36px 60px;max-width:1040px;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px}
+.eyebrow:before{content:"";width:22px;height:2px;border-radius:2px;background:var(--acc)}
+.card{border-radius:var(--r);box-shadow:var(--sh);padding:22px;transition:transform .2s,box-shadow .2s,border-color .2s}
+.grid .card:hover{transform:translateY(-3px);border-color:var(--acc)}
+.stat{position:relative;overflow:hidden}
+.stat:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--acc),#B3121F)}
+.stat:after{content:"";position:absolute;right:-30px;top:-30px;width:100px;height:100px;border-radius:50%;background:radial-gradient(var(--glow),transparent 70%);opacity:.5}
+.stat b{font-size:38px;font-weight:800;letter-spacing:-.02em}
+.hero{position:relative;overflow:hidden;border-radius:20px;padding:30px 32px;margin-bottom:22px;color:#fff;
+ background:radial-gradient(500px 220px at 100% 0%,rgba(225,29,46,.35),transparent 65%),linear-gradient(135deg,#0F172A,#1E293B);
+ border:1px solid rgba(255,255,255,.08);box-shadow:var(--sh)}
+.hero:after{content:"UBUNYE";position:absolute;right:24px;bottom:-14px;font:800 84px Sora,sans-serif;letter-spacing:.06em;color:rgba(255,255,255,.05);pointer-events:none}
+.hero h1{font-size:34px;margin:6px 0 6px}.hero p{margin:0;color:#CBD5E1;max-width:520px}
+.hero .eyebrow{color:#FF4D5A}
+.hero .acts{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.hero .btn{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.16);text-decoration:none;display:inline-block}
+.hero .btn.p{background:linear-gradient(135deg,#FF4D5A,#E11D2E);color:#0F172A;border:0}
+.row{padding:15px 8px;margin:0 -8px;border-radius:12px;transition:background .15s;border-top-color:var(--line)}
+.row:hover{background:var(--panel2)}
+.btn{transition:transform .12s,box-shadow .15s,border-color .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.p{background:linear-gradient(135deg,#FF4D5A,#E11D2E);border:0;box-shadow:0 6px 16px -6px var(--glow)}
+.btn.p:hover{box-shadow:0 10px 22px -6px var(--glow)}
+.btn:disabled{opacity:.35;cursor:default;transform:none}
+.btn.d:hover{border-color:var(--bad);background:rgba(220,38,38,.08)}
+.tag{background:var(--panel2);padding:4px 10px}
+.tag.ok{background:rgba(22,163,74,.12)}.tag.wait{background:rgba(225,29,46,.12)}
+.tag.ok:before,.tag.wait:before{content:"●";font-size:8px;margin-right:6px;vertical-align:1px}
+.sw i{box-shadow:inset 0 1px 3px rgba(0,0,0,.15)}.sw i:after{box-shadow:0 2px 4px rgba(0,0,0,.25)}
+.sw input:checked+i{background:linear-gradient(135deg,#FF4D5A,#E11D2E)}
+input[type=text],textarea{border-radius:12px;padding:11px 14px;transition:border-color .15s,box-shadow .15s}
+input[type=text]:focus,textarea:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 4px rgba(225,29,46,.18)}
+input[type=checkbox]{accent-color:#E11D2E;width:16px;height:16px}
+dialog{box-shadow:0 30px 80px -20px rgba(0,0,0,.6)!important;animation:fade .2s ease}
+dialog::backdrop{background:rgba(8,13,24,.6);backdrop-filter:blur(4px)}
+.note{border-radius:12px;background:rgba(225,29,46,.1);border:1px solid rgba(225,29,46,.35);border-left-width:4px}
+.toast{box-shadow:0 12px 30px -8px rgba(0,0,0,.5)}
+@media(max-width:760px){
+ #nav{flex-direction:row;flex-wrap:wrap}aside{overflow:visible}aside:before{display:none}
+ main{padding:20px 14px 50px}.hero{padding:22px}.hero h1{font-size:26px}.hero:after{font-size:52px}
+ .row{flex-wrap:wrap}.row .g{flex-basis:100%}}
+input[type=password]{width:100%;margin-top:5px;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font:inherit}input[type=password]:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 4px rgba(225,29,46,.18)}
+
+/* ---- v3: matched to ubunye.weybrand.co.za (Syne, navy, orange, pastel tints, glass) ---- */
+:root{--acc:#E11D2E;--acc-t:#0F172A;--bg:#FBF6F1;--panel:rgba(255,255,255,.62);--panel2:rgba(255,255,255,.55);--line:rgba(15,23,42,.1);--text:#0F172A;--mute:#5B6475;
+--t-pink:#FFD9E3;--t-mint:#CDF2E1;--t-blue:#D2E3FF;--t-gold:#FFE8A6;--t-lilac:#E2D7FF;--t-ink:#0F172A;
+--glass:rgba(255,255,255,.5);--glass-b:rgba(255,255,255,.8);--glass-h:rgba(255,255,255,.92);--hi:rgba(255,255,255,.7);--glow:rgba(225,29,46,.38)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F172A;--panel:rgba(30,41,59,.55);--panel2:rgba(255,255,255,.05);--line:rgba(255,255,255,.1);--text:#F1F5F9;--mute:#9AA6B8;--t-pink:rgba(255,120,160,.17);--t-mint:rgba(80,220,170,.15);--t-blue:rgba(110,160,255,.18);--t-gold:rgba(255,200,70,.16);--t-lilac:rgba(170,140,255,.19);--t-ink:#F1F5F9;--glass:rgba(255,255,255,.07);--glass-b:rgba(255,255,255,.16);--glass-h:rgba(255,255,255,.26);--hi:rgba(255,255,255,.12)}}
+:root[data-theme="dark"]{--bg:#0F172A;--panel:rgba(30,41,59,.55);--panel2:rgba(255,255,255,.05);--line:rgba(255,255,255,.1);--text:#F1F5F9;--mute:#9AA6B8;--t-pink:rgba(255,120,160,.17);--t-mint:rgba(80,220,170,.15);--t-blue:rgba(110,160,255,.18);--t-gold:rgba(255,200,70,.16);--t-lilac:rgba(170,140,255,.19);--t-ink:#F1F5F9;--glass:rgba(255,255,255,.07);--glass-b:rgba(255,255,255,.16);--glass-h:rgba(255,255,255,.26);--hi:rgba(255,255,255,.12)}
+body{font-family:Syne,system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:500;font-size:16px;color:var(--text);
+ background:radial-gradient(640px 440px at 6% 6%,var(--t-pink),transparent 70%),radial-gradient(600px 420px at 96% 10%,var(--t-blue),transparent 70%),radial-gradient(660px 480px at 80% 94%,var(--t-mint),transparent 70%),radial-gradient(560px 400px at 8% 90%,var(--t-lilac),transparent 70%),var(--bg);background-attachment:fixed}
+h1,h3,.brand,.stat b,.hero:after,.logo{font-family:Syne,system-ui,sans-serif}
+aside{width:264px;padding:26px 16px}
+aside button.nav{padding:13px 16px;font-size:15px;font-weight:600;border-radius:999px}
+main{max-width:1120px;padding:44px 48px 80px}
+.top{margin-bottom:30px}
+.top h1{font-size:clamp(34px,4.6vw,52px);letter-spacing:-.025em;line-height:1.05;margin-top:8px}
+.eyebrow{font-size:12px;letter-spacing:.2em}
+.mute{font-size:15px}
+.grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-bottom:22px}
+.card{background:var(--panel);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);border:1px solid var(--glass-b);border-radius:28px;padding:28px;box-shadow:0 18px 50px -24px rgba(15,23,42,.28),inset 0 1px 0 var(--hi)}
+.card h3{font-size:22px;letter-spacing:-.01em}
+.stat{color:var(--t-ink);min-height:158px}
+.stat.pink{background:var(--t-pink)}.stat.mint{background:var(--t-mint)}.stat.blue{background:var(--t-blue)}.stat.gold{background:var(--t-gold)}
+.stat .lbl,.stat .mute{color:inherit;opacity:.72}
+.stat b{font-size:56px;font-weight:800;letter-spacing:-.03em;margin:10px 0}
+.stat:before{display:none}.stat:after{background:radial-gradient(rgba(255,255,255,.7),transparent 70%);opacity:.6}
+.hero{padding:52px 52px 56px;border-radius:36px;min-height:300px;margin-bottom:22px}
+.hero:before{content:"";position:absolute;right:-70px;top:-70px;width:340px;height:340px;border-radius:50%;border:1px solid rgba(255,255,255,.16);box-shadow:0 0 0 48px rgba(255,255,255,.035),0 0 0 104px rgba(255,255,255,.02)}
+.hero:after{display:none}
+.hero h1{font-size:clamp(44px,7vw,76px);line-height:.98;letter-spacing:-.03em;margin:12px 0 14px}
+.hero p{font-size:18px;max-width:480px}
+.hero .acts{margin-top:28px}
+.chip{position:absolute;padding:9px 18px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.16em;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.26);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3);animation:flt 6s ease-in-out infinite}
+.chip.c1{right:30%;top:30px}.chip.c2{right:7%;top:70px;animation-delay:-2s}.chip.c3{right:22%;bottom:62px;animation-delay:-4s}.chip.c4{right:4%;bottom:30px;animation-delay:-1s}
+@keyframes flt{50%{transform:translateY(-9px)}}
+.ticker{overflow:hidden;white-space:nowrap;margin-bottom:22px;padding:13px 0;border-radius:999px;background:var(--glass);border:1px solid var(--glass-b);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.ticker .tr{display:inline-block;animation:tick 30s linear infinite}
+.ticker span{margin:0 26px;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.ticker span:nth-child(3n+1){color:var(--acc)}
+@keyframes tick{to{transform:translateX(-50%)}}
+.btn{background:var(--glass);-webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%);border:1px solid var(--glass-b);color:var(--text);padding:12px 22px;font-weight:700;box-shadow:inset 0 1px 0 var(--hi),0 10px 24px -14px rgba(15,23,42,.45)}
+.btn:hover{background:var(--glass-h);border-color:var(--acc);transform:translateY(-2px)}
+.btn.s{padding:7px 14px;font-size:13px}
+.btn.p{background:linear-gradient(135deg,rgba(255,77,90,.95),rgba(225,29,46,.95));border:1px solid rgba(255,255,255,.55);color:#0F172A;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 12px 28px -10px var(--glow)}
+.btn.p:hover{background:linear-gradient(135deg,#FF6470,#EE2B3B);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 16px 34px -10px var(--glow)}
+.hero .btn{color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.26)}
+.hero .btn.p{color:#0F172A;background:linear-gradient(135deg,rgba(255,77,90,.95),rgba(225,29,46,.95))}
+.row{padding:18px 12px;margin:0 -12px}
+.row:hover{background:var(--glass)}
+.tag{background:var(--glass);border:1px solid var(--glass-b);padding:5px 12px}
+.sw i{background:rgba(100,116,139,.35)}
+input[type=text],input[type=password],textarea{background:var(--panel2);border:1px solid var(--glass-b);border-radius:16px;padding:13px 16px;color:var(--text);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+dialog{background:var(--bg)!important;border-radius:28px!important;padding:30px!important}
+.note{background:var(--t-gold);color:var(--t-ink)}
+@media(max-width:760px){
+ aside{width:100%}main{padding:22px 16px 60px}.hero{padding:30px 24px 36px;min-height:0}.hero p{font-size:16px}.chip{display:none}
+ .stat b{font-size:44px}.stat{min-height:0}.card{padding:22px;border-radius:24px}}
+
+/* ---- v4: red / black / grey ---- */
+:root{--acc:#E11D2E;--acc-t:#fff;--bg:#F1F1F2;--text:#0A0A0B;--mute:#62626A;--side:#0A0A0B;--glow:rgba(225,29,46,.4);
+--t-pink:#FAD3D7;--t-mint:#E5E5E8;--t-blue:#D3D3D8;--t-gold:#1A1A1D;--t-lilac:#DEDEE2;--t-ink:#0A0A0B}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A0A0B;--panel:rgba(32,32,36,.58);--panel2:rgba(255,255,255,.05);--line:rgba(255,255,255,.1);--text:#F3F3F4;--mute:#A0A0A8;--side:#050506;--t-pink:rgba(225,29,46,.22);--t-mint:rgba(255,255,255,.08);--t-blue:rgba(255,255,255,.12);--t-gold:#1F1F23;--t-lilac:rgba(255,255,255,.05);--t-ink:#F3F3F4}}
+:root[data-theme="dark"]{--bg:#0A0A0B;--panel:rgba(32,32,36,.58);--panel2:rgba(255,255,255,.05);--line:rgba(255,255,255,.1);--text:#F3F3F4;--mute:#A0A0A8;--side:#050506;--t-pink:rgba(225,29,46,.22);--t-mint:rgba(255,255,255,.08);--t-blue:rgba(255,255,255,.12);--t-gold:#1F1F23;--t-lilac:rgba(255,255,255,.05);--t-ink:#F3F3F4}
+aside{background:linear-gradient(180deg,#171719 0%,#050506 100%)}
+.stat.gold{color:#fff}
+.stat.gold:after{background:radial-gradient(rgba(225,29,46,.55),transparent 70%)}
+.hero{background:radial-gradient(520px 240px at 100% 0%,rgba(225,29,46,.5),transparent 65%),linear-gradient(135deg,#0A0A0B,#232326)}
+.btn.p,.hero .btn.p{color:#fff}
+.note{border-color:rgba(225,29,46,.5);background:var(--t-pink)}
+.login{max-width:540px;margin:5vh auto}.login h1{font-size:clamp(38px,6vw,56px);margin:8px 0 6px;letter-spacing:-.03em;line-height:1}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0 18px}
+.role{all:unset;box-sizing:border-box;cursor:pointer;padding:22px;border-radius:26px;background:var(--glass);border:1px solid var(--glass-b);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);display:flex;flex-direction:column;gap:8px;box-shadow:inset 0 1px 0 var(--hi);transition:.18s}
+.role b{font-size:19px;font-weight:800}.role span{font-size:13px;line-height:1.4;color:var(--mute)}
+.role:hover{transform:translateY(-2px)}.role:focus-visible{outline:2px solid var(--acc)}
+.role.on{border-color:var(--acc);background:var(--glass-h);box-shadow:0 0 0 3px rgba(225,29,46,.2),0 18px 36px -16px var(--glow)}
+@media(max-width:560px){.roles{grid-template-columns:1fr}}
+.brand{gap:12px;letter-spacing:0;min-width:0}
+.brand .logo{flex:0 0 42px;width:42px;height:42px;overflow:hidden;font-family:Syne,system-ui,sans-serif;font-size:11px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.brand-copy{min-width:0;line-height:1.2;letter-spacing:.14em;white-space:nowrap}
+.brand-copy small{margin-top:4px;letter-spacing:.12em}
+@media(max-width:760px){.brand{width:auto;flex:1 0 100%;gap:12px}.brand .logo{flex-basis:42px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+ <div class="brand"><div class="logo" aria-hidden="true">USC</div><div class="brand-copy"><span>UBUNYE</span><small>CMS ADMIN</small></div></div>
+ <div id="nav"></div>
+ <div class="sp"></div>
+ <div id="who" style="margin:0 10px 10px;color:#CBD5E1;font-size:13px"></div><button class="btn s" id="out" style="margin:0 8px 8px">Sign out</button>
+ <button class="btn s" id="theme" style="margin:0 8px 8px">Toggle theme</button>
+ <a href="https://ubunye.weybrand.co.za/index.html" target="_blank" rel="noopener">← View website</a>
+</aside>
+<main id="main"></main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY="ubunye-admin-v1";
+const DEF={
+ content:{heroKicker:"Safety • Compliance • Confidence",heroTitle:"UBUNYE",
+  heroText:"Professional SHEQ, OHS compliance, ISO support and safety training for industrial and corporate businesses across Eastern Cape, Limpopo and Mpumalanga.",
+  ctaPrimary:"get quote",ctaSecondary:"Explore services",
+  faq:[
+   {q:"Can Ubunye support a once-off compliance project?",a:"Yes. The site supports both once-off project enquiries and ongoing SHEQ retainer requests. Final scope is confirmed directly with Ubunye."},
+   {q:"Can we request ISO-related support?",a:"Yes. ISO consulting support forms part of the brief. The standard, deliverables and certification scope are confirmed before work begins."},
+   {q:"Do you provide safety training?",a:"Safety training is included. Course titles and accreditation claims are listed once verified details are supplied."},
+   {q:"Can we book a consultation first?",a:"Yes. The site includes consultation and quote pathways."}]},
+ services:[
+  {t:"OHS & legal compliance",d:"Compliance reviews, gap identification, documentation support and practical action planning.",v:true},
+  {t:"ISO consulting support",d:"Structured support for organisations working toward management-system alignment and certification readiness.",v:true},
+  {t:"Safety training",d:"Training support designed around your operational needs and workforce.",v:true},
+  {t:"SHEQ retainers",d:"Ongoing support for companies that need consistent compliance assistance without a full-time internal resource.",v:true},
+  {t:"Compliance updates",d:"Blog-ready updates for ISO deadlines and compliance changes.",v:true}],
+ proof:[
+  {t:"Client testimonial",d:"Verified client feedback will be inserted here once supplied and approved.",ok:false,pub:false},
+  {t:"Case study framework",d:"Problem → intervention → measurable result.",ok:true,pub:true}],
+ settings:{email:"ubunyesafety@gmail.com",phone:"083 646 7294",whatsapp:"067 577 9148",provinces:"Eastern Cape, Limpopo, Mpumalanga",title:"Ubunye Safety & Compliance | SHEQ, OHS & ISO Support",analytics:"",maint:false}
+};
+let S=JSON.parse(JSON.stringify(DEF)),PW=sessionStorage.getItem("ua-pw")||"",ROLE=sessionStorage.getItem("ua-role")||"";
+async function api(m,b){const r=await fetch("/admin/api/data",{method:m,headers:{"content-type":"application/json",authorization:"Bearer "+PW,"x-role":ROLE},body:b?JSON.stringify(b):undefined});if(r.status===401)throw 401;if(!r.ok)throw r.status;return r.json()}
+let _t;const save=m=>{clearTimeout(_t);_t=setTimeout(()=>api("PUT",S).then(()=>toast(m||"Saved")).catch(()=>toast("Save failed - try again")),250)};
+async function boot(){if(!ROLE||!PW)return login("");try{S=await api("GET");$("who").textContent="Signed in: "+ROLES[ROLE][0];render()}catch(e){login(e===401?"Wrong password.":"Could not reach the server.")}}
+const ROLES={dev:["Wey Developer","Full access, including SEO, analytics and maintenance mode."],director:["USC Director","Manage services, FAQ, proof and contact details."]};
+function login(msg){let r=ROLE||"director";nav();$("who").textContent="";
+ const draw=()=>{$("main").innerHTML=`<div class="login"><div class="eyebrow">Ubunye CMS</div><h1>Sign in</h1><div class="mute">Choose how you are signing in.</div>
+ <div class="roles">${Object.entries(ROLES).map(([k,[n,d]])=>`<button class="role ${k===r?"on":""}" data-r="${k}"><b>${n}</b><span>${d}</span></button>`).join("")}</div>
+ <div class="card"><label class="f">Password for ${ROLES[r][0]}<input type="password" id="pw" autocomplete="current-password"></label><div class="mute" style="min-height:24px;color:var(--acc)">${msg}</div><button class="btn p" id="go">Sign in as ${ROLES[r][0]}</button></div></div>`;
+ q("[data-r]",b=>b.onclick=()=>{r=b.dataset.r;msg="";draw()});
+ const go=()=>{PW=$("pw").value;ROLE=r;sessionStorage.setItem("ua-pw",PW);sessionStorage.setItem("ua-role",r);boot()};
+ $("go").onclick=go;$("pw").onkeydown=e=>{if(e.key==="Enter")go()};$("pw").focus()};draw()}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("on"),1600)}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const TABS=[["overview","Overview"],["content","Page content"],["services","Services"],["proof","Case studies & proof"],["settings","Site settings"]];
+let tab="overview";
+const $=id=>document.getElementById(id);
+const TK=["COIDA","OHS ACT","ISO 45001","SHEQ retainers","Safety training","Risk management"].map(x=>`<span>${x}</span>`).join("");
+const IC={overview:'<path d="M3 12l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>',content:'<path d="M5 3h10l4 4v14H5zM14 3v5h5M8 13h8M8 17h6"/>',services:'<path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5M3 17l9 5 9-5" />',proof:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>'};
+function nav(){$("nav").innerHTML=TABS.map(([k,n])=>`<button class="nav ${k===tab?"on":""}" data-t="${k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[k]}</svg>${n}</button>`).join("");
+ $("nav").querySelectorAll("button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;render()})}
+function head(e,t,sub){return `<div class="top"><div><div class="eyebrow">${e}</div><h1>${t}</h1>${sub?`<div class="mute">${sub}</div>`:""}</div></div>`}
+
+const V={
+overview(){const live=S.services.filter(s=>s.v).length,pend=S.proof.filter(p=>!p.ok).length;
+ return `<div class="hero"><div class="eyebrow">Safety • Compliance • Confidence</div><h1>Control centre.</h1><p>Manage everything that appears on ubunye.weybrand.co.za from one place.</p>
+ <div class="acts"><button class="btn p" onclick="tab='services';render()">Manage services</button><a class="btn" href="https://ubunye.weybrand.co.za/index.html" target="_blank" rel="noopener">View website ↗</a></div><span class="chip c1">ASSESS</span><span class="chip c2">CONTROL</span><span class="chip c3">TRAIN</span><span class="chip c4">IMPROVE</span></div>`+
+ `<div class="ticker"><div class="tr">${TK}${TK}</div></div>`+
+ (S.settings.maint?`<div class="note"><b>Maintenance mode is ON.</b> Visitors would see a holding page.</div>`:"")+
+ `<div class="grid">
+ <div class="card stat pink"><span class="lbl">PAGES</span><b>8</b><span class="mute">Core pages with editable content.</span></div>
+ <div class="card stat mint"><span class="lbl">LIVE SERVICES</span><b>${live}/${S.services.length}</b><span class="mute">Visible on the website.</span></div>
+ <div class="card stat blue"><span class="lbl">PROOF AWAITING</span><b>${pend}</b><span class="mute">Items not yet verified.</span></div>
+ <div class="card stat gold"><span class="lbl">LEAD ROUTES</span><b>3</b><span class="mute">Quote form, WhatsApp, direct.</span></div></div>
+ <div class="card"><h3>Lead routes</h3>
+ <div class="row"><div class="g"><b>Quote form</b><div class="mute">quote.html</div></div><span class="tag ok">ACTIVE</span></div>
+ <div class="row"><div class="g"><b>WhatsApp</b><div class="mute">${esc(S.settings.whatsapp)}</div></div><span class="tag ok">ACTIVE</span></div>
+ <div class="row"><div class="g"><b>Direct contact</b><div class="mute">${esc(S.settings.email)} · ${esc(S.settings.phone)} (Nolan)</div></div><span class="tag ok">ACTIVE</span></div></div>`},
+
+content(){const c=S.content;
+ return head("Page content","Homepage","Hero text and FAQ.")+
+ `<div class="card" style="margin-bottom:18px"><h3>Hero</h3><br>
+ ${[["heroKicker","Kicker"],["heroTitle","Heading"],["ctaPrimary","Primary button"],["ctaSecondary","Secondary button"]].map(([k,l])=>`<label class="f">${l}<input type="text" data-c="${k}" value="${esc(c[k])}"></label>`).join("")}
+ <label class="f">Intro text<textarea data-c="heroText">${esc(c.heroText)}</textarea></label>
+ <button class="btn p" id="saveC">Save hero</button></div>
+ <div class="card"><div class="row" style="border:0;padding-top:0"><h3 class="g">FAQ</h3><button class="btn s" id="addQ">+ Add question</button></div>
+ ${c.faq.map((f,i)=>`<div class="row"><div class="g"><b>${esc(f.q)}</b><div class="mute">${esc(f.a)}</div></div><button class="btn s" data-eq="${i}">Edit</button><button class="btn s d" data-dq="${i}">Delete</button></div>`).join("")}</div>`},
+
+services(){return head("Service management","Services","Toggle visibility, reorder and edit.")+
+ `<div class="card"><div class="row" style="border:0;padding-top:0"><span class="g mute">${S.services.length} services</span><button class="btn p s" id="addS">+ Add service</button></div>
+ ${S.services.map((s,i)=>`<div class="row"><label class="sw"><input type="checkbox" data-vs="${i}" ${s.v?"checked":""}><i></i></label>
+ <div class="g"><b>${esc(s.t)}</b><div class="mute">${esc(s.d)}</div></div>
+ <button class="btn s" data-up="${i}" ${i?"":"disabled"}>↑</button><button class="btn s" data-dn="${i}" ${i<S.services.length-1?"":"disabled"}>↓</button>
+ <button class="btn s" data-es="${i}">Edit</button><button class="btn s d" data-ds="${i}">Delete</button></div>`).join("")}</div>`},
+
+proof(){return head("Verified proof only","Testimonials & case studies","Content can only be published once the client has verified it.")+
+ `<div class="card"><div class="row" style="border:0;padding-top:0"><span class="g mute">${S.proof.length} items</span><button class="btn p s" id="addP">+ Add item</button></div>
+ ${S.proof.map((p,i)=>`<div class="row"><div class="g"><b>${esc(p.t)}</b><div class="mute">${esc(p.d)}</div></div>
+ <span class="tag ${p.ok?"ok":"wait"}">${p.ok?"VERIFIED":"AWAITING"}</span>
+ <label class="mute" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-vp="${i}" ${p.ok?"checked":""}> Verified</label>
+ <label class="sw" title="Publish"><input type="checkbox" data-pp="${i}" ${p.pub?"checked":""} ${p.ok?"":"disabled"}><i></i></label>
+ <button class="btn s" data-ep="${i}">Edit</button><button class="btn s d" data-dp="${i}">Delete</button></div>`).join("")}</div>`},
+
+settings(){const s=S.settings;
+ return head("Site settings","Global fields","Contact details, SEO and site status.")+
+ `<div class="card">${[["email","Email"],["phone","Phone (Nolan)"],["whatsapp","WhatsApp"],["provinces","Provinces served"],["title","SEO title"],["analytics","Analytics ID"]].filter(([k])=>ROLE==="dev"||!["title","analytics"].includes(k)).map(([k,l])=>`<label class="f">${l}<input type="text" data-s="${k}" value="${esc(s[k])}"></label>`).join("")}
+ ${ROLE==="dev"?`<div class="row"><div class="g"><b>Maintenance mode</b><div class="mute">Show a holding page to visitors.</div></div><label class="sw"><input type="checkbox" id="maint" ${s.maint?"checked":""}><i></i></label></div>`:""}
+ <br><button class="btn p" id="saveS">Save settings</button></div>`}
+};
+
+// modal-free editing via prompt-like inline dialog
+function dlg(title,fields,vals,done){
+ const d=document.createElement("dialog");
+ d.style.cssText="border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--text);padding:22px;width:min(480px,92vw)";
+ d.innerHTML=`<h3>${title}</h3><br>${fields.map(([k,l,ta])=>`<label class="f">${l}${ta?`<textarea name="${k}">${esc(vals[k]||"")}</textarea>`:`<input type="text" name="${k}" value="${esc(vals[k]||"")}">`}</label>`).join("")}
+ <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" data-x>Cancel</button><button class="btn p" data-ok>Save</button></div>`;
+ document.body.appendChild(d);d.showModal();
+ const close=()=>{d.close();d.remove()};
+ d.querySelector("[data-x]").onclick=close;
+ d.querySelector("[data-ok]").onclick=()=>{const o={};d.querySelectorAll("[name]").forEach(e=>o[e.name]=e.value.trim());if(Object.values(o)[0]){done(o);close()}};
+}
+const q=(s,f)=>document.querySelectorAll(s).forEach(f);
+function bind(){
+ if(tab==="content"){
+  $("saveC").onclick=()=>{q("[data-c]",e=>S.content[e.dataset.c]=e.value);save("Hero saved")};
+  $("addQ").onclick=()=>dlg("New question",[["q","Question"],["a","Answer",1]],{},o=>{S.content.faq.push(o);save();render()});
+  q("[data-eq]",b=>b.onclick=()=>{const i=+b.dataset.eq;dlg("Edit question",[["q","Question"],["a","Answer",1]],S.content.faq[i],o=>{S.content.faq[i]=o;save();render()})});
+  q("[data-dq]",b=>b.onclick=()=>{S.content.faq.splice(+b.dataset.dq,1);save("Deleted");render()});
+ }
+ if(tab==="services"){
+  const L=S.services,F=[["t","Title"],["d","Description",1]];
+  $("addS").onclick=()=>dlg("New service",F,{},o=>{L.push({...o,v:true});save();render()});
+  q("[data-vs]",e=>e.onchange=()=>{L[+e.dataset.vs].v=e.checked;save()});
+  q("[data-es]",b=>b.onclick=()=>{const i=+b.dataset.es;dlg("Edit service",F,L[i],o=>{Object.assign(L[i],o);save();render()})});
+  q("[data-ds]",b=>b.onclick=()=>{L.splice(+b.dataset.ds,1);save("Deleted");render()});
+  q("[data-up]",b=>b.onclick=()=>{const i=+b.dataset.up;[L[i-1],L[i]]=[L[i],L[i-1]];save();render()});
+  q("[data-dn]",b=>b.onclick=()=>{const i=+b.dataset.dn;[L[i+1],L[i]]=[L[i],L[i+1]];save();render()});
+ }
+ if(tab==="proof"){
+  const L=S.proof,F=[["t","Title"],["d","Details",1]];
+  $("addP").onclick=()=>dlg("New proof item",F,{},o=>{L.push({...o,ok:false,pub:false});save();render()});
+  q("[data-vp]",e=>e.onchange=()=>{const p=L[+e.dataset.vp];p.ok=e.checked;if(!e.checked)p.pub=false;save();render()});
+  q("[data-pp]",e=>e.onchange=()=>{L[+e.dataset.pp].pub=e.checked;save(e.checked?"Published":"Unpublished")});
+  q("[data-ep]",b=>b.onclick=()=>{const i=+b.dataset.ep;dlg("Edit item",F,L[i],o=>{Object.assign(L[i],o);save();render()})});
+  q("[data-dp]",b=>b.onclick=()=>{L.splice(+b.dataset.dp,1);save("Deleted");render()});
+ }
+ if(tab==="settings"){
+  $("saveS").onclick=()=>{q("[data-s]",e=>S.settings[e.dataset.s]=e.value);if($("maint"))S.settings.maint=$("maint").checked;save("Settings saved")};
+ }
+}
+function render(){nav();$("main").innerHTML=V[tab]();bind();window.scrollTo(0,0)}
+$("theme").onclick=()=>{const r=document.documentElement,d=r.dataset.theme==="dark"||(!r.dataset.theme&&matchMedia("(prefers-color-scheme:dark)").matches);r.dataset.theme=d?"light":"dark"};
+$("out").onclick=()=>{sessionStorage.removeItem("ua-pw");sessionStorage.removeItem("ua-role");PW="";ROLE="";login("")};
+boot();
+</script>
+</body>
+</html>
