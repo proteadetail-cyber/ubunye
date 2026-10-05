@@ -305,6 +305,7 @@ footer .copy{grid-column:1/-1}
 .card:has(.icon):hover .icon,.card:has(.icon):focus-within .icon{opacity:0}
 .card:has(.icon) .card-link:hover{transform:scale(1.04)}
 @media(hover:none){.card:has(.icon) .card-link{width:132px;opacity:1;pointer-events:auto}.card:has(.icon) .icon{opacity:0}}
+.card.pill:has(.icon) .card-link{top:36px;right:48px}
 .card:has(.icon) .card-link{box-sizing:border-box;padding:0 22px;background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.05) 58%,rgba(220,38,38,.22));border:1px solid rgba(255,255,255,.28);box-shadow:inset 1px -1px 1px rgba(255,255,255,.28),inset -1px 1px 1px rgba(255,255,255,.12),0 8px 20px rgba(0,0,0,.32);-webkit-backdrop-filter:blur(12px) saturate(145%);backdrop-filter:blur(12px) saturate(145%);text-overflow:clip}
 .card:has(.icon):hover .card-link,.card:has(.icon):focus-within .card-link{width:min(184px,calc(100% - 52px))}
 @media(hover:none){.card:has(.icon) .card-link{width:min(184px,calc(100% - 52px))}}
